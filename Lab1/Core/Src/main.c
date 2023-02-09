@@ -70,7 +70,6 @@ uint16_t ButtonMatrix = 0;
 uint16_t ButtonMatrix_L = 0;
 int flag = 0;
 int state = 0, state_L = 0;
-int number = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -136,7 +135,6 @@ int main(void) {
 		switch (state) {
 		case 0:
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0); //LEDoff
-			number = 1111;
 			if (flag) {
 				if (ButtonMatrix == 512) {
 					state = 1;
@@ -156,7 +154,6 @@ int main(void) {
 			}
 			break;
 		case 1:
-			number = 6;
 			if (flag) {
 				if (ButtonMatrix == 2) {
 					state = 2;
@@ -176,7 +173,6 @@ int main(void) {
 			}
 			break;
 		case 2:
-			number = 4;
 			if (flag) {
 				if (ButtonMatrix == 1024) {
 					state = 3;
@@ -196,7 +192,6 @@ int main(void) {
 			}
 			break;
 		case 3:
-			number = 3;
 			if (flag) {
 				if (ButtonMatrix == 2) {
 					state = 4;
@@ -216,7 +211,6 @@ int main(void) {
 			}
 			break;
 		case 4:
-			number = 4;
 			if (flag) {
 				if (ButtonMatrix == 8) {
 					state = 5;
@@ -236,7 +230,6 @@ int main(void) {
 			}
 			break;
 		case 5:
-			number = 0;
 			if (flag) {
 				if (ButtonMatrix == 32) {
 					state = 6;
@@ -256,7 +249,6 @@ int main(void) {
 			}
 			break;
 		case 6:
-			number = 5;
 			if (flag) {
 				if (ButtonMatrix == 8) {
 					state = 7;
@@ -276,7 +268,6 @@ int main(void) {
 			}
 			break;
 		case 7:
-			number = 0;
 			if (flag) {
 				if (ButtonMatrix == 8) {
 					state = 8;
@@ -296,7 +287,6 @@ int main(void) {
 			}
 			break;
 		case 8:
-			number = 0;
 			if (flag) {
 				if (ButtonMatrix == 8) {
 					state = 9;
@@ -316,7 +306,6 @@ int main(void) {
 			}
 			break;
 		case 9:
-			number = 0;
 			if (flag) {
 				if (ButtonMatrix == 64) {
 					state = 10;
@@ -336,7 +325,6 @@ int main(void) {
 			}
 			break;
 		case 10:
-			number = 3;
 			if (flag) {
 				if (ButtonMatrix == 512) {
 					state = 11;
@@ -355,8 +343,7 @@ int main(void) {
 				state_L = 10;
 			}
 			break;
-		case 11: //last number
-			number = 0;
+		case 11:
 			if (flag) {
 				if (ButtonMatrix == 32768) { //ok
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1); //LEDon
@@ -375,7 +362,7 @@ int main(void) {
 				state_L = 11;
 			}
 			break;
-		case 12: //input wrong number
+		case 12:
 			number = 999;
 			if (flag) {
 				if (ButtonMatrix == 4096) { //clear
@@ -387,6 +374,7 @@ int main(void) {
 			}
 			break;
 		}
+
 		static uint32_t timestamp = 0;
 		if (HAL_GetTick() >= timestamp) {
 			timestamp = HAL_GetTick() + 100;
